@@ -7,9 +7,26 @@
 
 /* includes */
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
 
 /* defines */
+#define HASH_SIZE 10007
+typedef struct HashNode {
+    int key; //关键字
+    int value; //值
+    struct HashNode *next; //链
+} HashNode; //哈希节点结构体定义
 
+typedef struct {
+    HashNode *buckets[HASH_SIZE]; // 指针数组，存储每个桶的头节点
+} HashTable; //哈希表
+
+
+
+
+/* function */
 /**
  * @brief 将数组划分为两部分（快排核心逻辑）
  * @param nums 目标数组
@@ -26,5 +43,46 @@ int divide(int* nums, int L, int R);
  * @param R 右边界索引
  */
 void QuickSort(int* nums, int L, int R);
+
+/**
+ * @brief 哈希函数：将 key 映射到 0 ~ HASH_SIZE-1
+ * @param key 关键字
+ */
+int Hash_getidx(int key);
+
+/**
+ * @brief 哈希表插入或更新
+ * @param map 哈希表
+ * @param key 关键字
+ * @param value 值
+ */
+void Hash_put(HashTable* map, int key, int value);
+
+/**
+ * @brief 哈希表中查找值
+ * @param map 哈希表
+ * @param key 关键字
+ */
+int Hash_getvaule(HashTable * map, int key);
+
+/**
+ * @brief 哈希表中检查key是否存在
+ * @param map 哈希表
+ * @param key 关键字
+ */
+bool contains(HashTable * map, int key);
+
+/**
+ * @brief 哈希表中删除key
+ * @param map 哈希表
+ * @param key 关键字
+ */
+void Hash_deleteKey(HashTable * map, int key);
+
+/**
+ * @brief 哈希表释放内存
+ * @param map 哈希表
+ */
+void freeHashMap(HashTable * map);
 
 #endif //DATA_STRUCTURE_LEARNING_FUNCTION_H
