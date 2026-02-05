@@ -13,6 +13,7 @@
 
 /* defines */
 #define HASH_SIZE 10007
+//Hash Table
 typedef struct HashNode {
     int key; //关键字
     int value; //值
@@ -22,6 +23,14 @@ typedef struct HashNode {
 typedef struct {
     HashNode *buckets[HASH_SIZE]; // 指针数组，存储每个桶的头节点
 } HashTable; //哈希表
+
+//Disjoint Set Union
+typedef struct {
+    int *front; //记录首结点
+    int *rank; //记录树高
+    int count; //记录连通分量的数量
+} DSU;
+
 
 
 
@@ -43,6 +52,10 @@ int divide(int* nums, int L, int R);
  * @param R 右边界索引
  */
 void QuickSort(int* nums, int L, int R);
+
+
+
+
 
 /**
  * @brief 哈希函数：将 key 映射到 0 ~ HASH_SIZE-1
@@ -84,5 +97,43 @@ void Hash_deleteKey(HashTable * map, int key);
  * @param map 哈希表
  */
 void freeHashMap(HashTable * map);
+
+
+
+
+/**
+ * @brief 创建并查集
+ * @param n 初始子集个数
+ */
+DSU* creatDSU(int n);
+
+/**
+ * @brief 查找并查集中元素的根节点
+ * @param dsu 并查集
+ * @param i 待查找元素
+ */
+int findDSU(DSU* dsu, int i);
+
+/**
+ * @brief 并
+ * @param dsu 并查集
+ * @param i 待合并元素i
+ * @param i 待合并元素j
+ */
+void UniteDSU(DSU* dsu, int i, int j);
+
+/**
+ * @brief 判断两元素是否已合并
+ * @param dsu 并查集
+ * @param i 待查找元素i
+ * @param i 待查找元素j
+ */
+bool DSUisConnected(DSU* dsu, int i, int j);
+
+/**
+ * @brief 释放并查集内存
+ * @param dsu 并查集
+ */
+void freeDSU(DSU* dsu);
 
 #endif //DATA_STRUCTURE_LEARNING_FUNCTION_H

@@ -114,5 +114,49 @@ void freeHashMap(HashTable * map) {
     free(map);
 }
 
+//Disjoint Set Union
+DSU* creatDSU(int n){
+    DSU* dsu = (DSU*) malloc(sizeof(DSU));
+    dsu -> front = (int*) malloc(sizeof(int) * n);
+    dsu -> rank = (int*) malloc(sizeof(int) * n);
+    dsu -> count = n;
+    for (int i = 0; i < n; i++){
+        dsu -> front[i] = i;
+        dsu -> rank[i] = 1;
+    }
+    return dsu;
+}
+
+int findDSU(DSU* dsu, int i){
+    if (dsu -> front[i] == i) return i;
+    // 递归查找并将结果直接赋值给front[i]，实现“路径压缩”
+    return dsu->front[i] = findDSU(dsu, dsu->front[i]);
+}
+
+void UniteDSU(DSU* dsu, int i, int j){
+    int rootI = findDSU(dsu, i);
+    int rootJ = findDSU(dsu, j);
+
+    if (rootI != rootJ) {
+        if (dsu->rank[rootI] == dsu->rank[rootJ]) {
+            dsu->front[rootJ] = rootI;
+            dsu->rank[rootI]++;
+        }
+        else if (dsu->rank[rootI] < dsu->rank[rootJ]) dsu->front[rootI] = rootJ;
+        else dsu->front[rootJ] = rootI;
+        dsu->count--;
+    }
+}
+
+bool DSUisConnected(DSU* dsu, int i, int j) {
+    return findDSU(dsu, i) == findDSU(dsu, j);
+}
+
+void freeDSU(DSU* dsu){
+    free(dsu -> front);
+    free(dsu -> rank);
+    free(dsu);
+}
+
 
 
