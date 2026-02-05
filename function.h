@@ -12,8 +12,8 @@
 #include <stdbool.h>
 
 /* defines */
-#define HASH_SIZE 10007
 //Hash Table
+#define HASH_SIZE 10007
 typedef struct HashNode {
     int key; //关键字
     int value; //值
@@ -31,6 +31,23 @@ typedef struct {
     int count; //记录连通分量的数量
 } DSU;
 
+//Adjacency Matrix
+#define MAX_V 100
+typedef struct {
+    int numV;
+    int matrix[MAX_V][MAX_V];
+} GraphMatrix;
+
+//Adjacency List
+typedef struct Node {
+    int val;
+    struct Node* next;
+} Node;
+
+typedef struct {
+    int numV;
+    Node** adjLists; // 指针数组，每个元素是一个链表头
+} GraphList;
 
 
 
@@ -135,5 +152,78 @@ bool DSUisConnected(DSU* dsu, int i, int j);
  * @param dsu 并查集
  */
 void freeDSU(DSU* dsu);
+
+
+
+
+
+/**
+ * @brief 初始化邻接矩阵
+ * @param g 邻接矩阵
+ * @param v 顶点个数
+ */
+void initMatrix(GraphMatrix* g, int v);
+
+/**
+ * @brief 邻接矩阵添加边
+ * @param g 邻接矩阵
+ * @param u 顶点u
+ * @param v 顶点v
+ */
+void addEdgeMatrix(GraphMatrix* g, int u, int v);
+
+/**
+ * @brief 邻接矩阵深度优先遍历
+ * @param g 邻接矩阵
+ * @param curr 起始顶点
+ * @param visited 记录顶点是否已访问
+ */
+int DFS_Matrix(GraphMatrix* g, int curr, bool* visited);
+
+/**
+ * @brief 邻接矩阵广度优先遍历
+ * @param g 邻接矩阵
+ * @param start 起始顶点
+ */
+void BFS_Matrix(GraphMatrix* g, int start);
+
+
+
+
+
+/**
+ * @brief 创建邻接表顶点
+ * @param d 顶点
+ */
+Node* createNode(int d);
+
+/**
+ * @brief 初始化邻接表
+ * @param v 顶点个数
+ */
+GraphList* initGraphList(int v);
+
+/**
+ * @brief 邻接表添加边
+ * @param g 邻接表
+ * @param u 顶点u
+ * @param v 顶点v
+ */
+void addEdgeList(GraphList* g, int u, int v);
+
+/**
+ * @brief 邻接表深度优先遍历
+ * @param g 邻接表
+ * @param curr 起始顶点
+ * @param visited 记录顶点是否已访问
+ */
+void DFS_List(GraphList* g, int curr, bool* visited);
+
+/**
+ * @brief 邻接表广度优先遍历
+ * @param g 邻接表
+ * @param start 起始顶点
+ */
+void BFS_List(GraphList* g, int start);
 
 #endif //DATA_STRUCTURE_LEARNING_FUNCTION_H

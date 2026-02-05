@@ -4,8 +4,9 @@ Used for record learning of data structure
 ## Function Catalog
 1、QuickSort  
 2、Hash Table (Separate Chaining)  
-3、Disjoint Set Union
-
+3、Disjoint Set Union  
+4、Adjacency Matrix  
+5、Adjacency List
 
 
 
